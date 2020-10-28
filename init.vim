@@ -32,15 +32,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-" Plug 'vim-scripts/grep.vim'
-" Plug 'vim-scripts/CSApprox'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
-" Plug 'w0rp/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --clangd-completer' }
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --clangd-completer' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 " set rtp+=/usr/local/opt/fzf
@@ -59,16 +59,49 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 
 Plug 'Shougo/vimproc.vim', {'do': g:make}
 
+
+"" Coc
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+" Note coc#float#scroll works on neovim >= 0.4.3 or vim >= 8.2.0750
+nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
 ""YouCompleteMe 
 
-let g:ycm_show_diagnostics_ui = 1
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+" let g:ycm_show_diagnostics_ui = 1
+" let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
-" ---> compatibility with another plugin (ultisnips) <---
-let g:ycm_key_list_select_completion = [ '<C-n>', '<Down>' ] 
-let g:ycm_key_list_previous_completion = [ '<C-p>', '<Up>' ]
-let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:ycm_always_populate_location_list = 1
+" " ---> compatibility with another plugin (ultisnips) <---
+" let g:ycm_key_list_select_completion = [ '<C-n>', '<Down>' ] 
+" let g:ycm_key_list_previous_completion = [ '<C-p>', '<Up>' ]
+" let g:SuperTabDefaultCompletionType = '<C-n>'
+" let g:ycm_always_populate_location_list = 1
 
 "" Vim-Session
 Plug 'xolox/vim-misc'
@@ -323,8 +356,8 @@ set autoread
 "" Mappings
 "*****************************************************************************
 
-map <leader>gd :YcmCompleter GoTo<CR>
-map <leader>gr :YcmCompleter GoToReferences<CR>
+" map <leader>gd :YcmCompleter GoTo<CR>
+" map <leader>gr :YcmCompleter GoToReferences<CR>
 
 "" Split
 noremap <Leader>h :<C-u>split<CR>
