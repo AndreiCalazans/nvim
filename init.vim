@@ -78,7 +78,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> go :call CocAction("doHover")<CR>
+nmap <silent> go :call CocActionAsync("doHover")<CR>
 
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -92,7 +92,6 @@ inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(
 inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
 ""YouCompleteMe 
 
 " let g:ycm_show_diagnostics_ui = 1
