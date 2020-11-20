@@ -373,6 +373,10 @@ noremap <Leader>gb :Gblame<CR>
 " noremap <Leader>gd :Gvdiff<CR>
 " noremap <Leader>gr :Gremove<CR>
 
+" Get commit history for current file
+noremap <Leader>gh :Git log --follow -- %<CR>
+
+
 " session management
 nnoremap <leader>so :OpenSession<Space>
 nnoremap <leader>ss :SaveSession<Space>
