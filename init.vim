@@ -62,9 +62,16 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 
 Plug 'Shougo/vimproc.vim', {'do': g:make}
 
-" Avoid showing message extra message when using completion source nvim-lua/completion-nvim
-set shortmess+=c
+" nvim-lua/completion-nvim recommendations
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
 
 "" Vim-Session
 Plug 'xolox/vim-misc'
