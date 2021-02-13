@@ -38,7 +38,10 @@ Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --clangd-completer' }
 
@@ -59,50 +62,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 
 Plug 'Shougo/vimproc.vim', {'do': g:make}
 
+" Avoid showing message extra message when using completion source nvim-lua/completion-nvim
+set shortmess+=c
 
-"" Coc
-
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
-
-" Give more space for displaying messages.
-set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> go :call CocActionAsync("doHover")<CR>
-nmap <silent> gp :call CocActionAsync("diagnosticPreview")<CR>
-
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-" Note coc#float#scroll works on neovim >= 0.4.3 or vim >= 8.2.0750
-nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-""YouCompleteMe 
-
-" let g:ycm_show_diagnostics_ui = 1
-" let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-
-" " ---> compatibility with another plugin (ultisnips) <---
-" let g:ycm_key_list_select_completion = [ '<C-n>', '<Down>' ] 
-" let g:ycm_key_list_previous_completion = [ '<C-p>', '<Up>' ]
-" let g:SuperTabDefaultCompletionType = '<C-n>'
-" let g:ycm_always_populate_location_list = 1
 
 "" Vim-Session
 Plug 'xolox/vim-misc'
@@ -150,6 +112,11 @@ if filereadable(expand("~/.config/nvim/local_bundles.vim"))
 endif
 
 call plug#end()
+
+
+" NeoVim's LSP Set UP
+lua require("lsp_config")
+" 
 
 " Required:
 filetype plugin indent on
@@ -442,26 +409,6 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
-
-" ale
-" @andrei - I removed ALE bc it does the same thing as Ycm
-" let g:ale_linters = {}
-" let g:ale_completion_enabled = 1
-" let g:ale_cpp_cc_options = '-std=c++14 
-"       \ -Wall
-"       \ -I/Users/andrei/youiengine/5.18.0/include
-"       \ -I/Users/andrei/youiengine/5.18.0/include/react
-"       \ -I/Users/andrei/youiengine/5.18.0/include/sdk
-"       \ -I/Users/andrei/youiengine/5.18.0/include/sdk/platform/osx
-"       \ -I/Users/andrei/youiengine/5.18.0/libs/thirdparty/include
-"       \ -I/Users/andrei/youiengine/5.18.0/libs/osx/thirdparty/include
-"       \ -I/Users/andrei/youiengine/5.18.0/include/cloud/cloud'
-
-" To avoid bug with autocomplete when using ALE -> https://www.rockyourcode.com/vim-autocomplete-with-ale/
-set completeopt=menu,menuone,preview,noselect,noinsert
-
-" nnoremap <silent> <leader>r :ALENext<CR>
-" nnoremap <silent> <leader>R :ALEPrevious<CR>
 
 " Tagbar
 nmap <silent> <F4> :TagbarToggle<CR>

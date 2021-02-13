@@ -1,5 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =8
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/Users/andrei/Downloads/G2i-node-api'
+let g:netrw_dirhist_9='/Users/andrei/Downloads/G2i-node-api/src/routes'
 let g:netrw_dirhist_8='/Users/andrei/youi/MKRetailClient/src/components'
 let g:netrw_dirhist_7='/Users/andrei/youi/MKRetailClient/src/views'
 let g:netrw_dirhist_6='/Users/andrei/youi/MKRetailClient/src/views/apps'
@@ -8,5 +10,3 @@ let g:netrw_dirhist_4='/Users/andrei/youi/MKRetailClient/src'
 let g:netrw_dirhist_3='/Users/andrei/youi/MKRetailClient/src/appReducers'
 let g:netrw_dirhist_2='/Users/andrei/youi/MKRetailClient/src'
 let g:netrw_dirhist_1='/Users/andrei/youi/MKRetailClient/src/navigator'
-let g:netrw_dirhist_0='/Users/andrei/youi/MKRetailClient/src'
-let g:netrw_dirhist_9='/Users/andrei/youi/MKRetailClient/src/appReducers'
