@@ -16,11 +16,9 @@ local function eslint_config_exists()
   return false
 end
 
-
-local on_attach = function(client, bufnr)
-
+local set_lsp_config = function(client, bufnr)
 	require'completion'.on_attach(client)
-
+	print("LSP started.");
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -44,17 +42,12 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 
-  -- TODO Config this for Prettier.
-  -- buf_set_keymap('n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
 	buf_set_keymap('n','<leader>ai','<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
 	buf_set_keymap('n','<leader>ao','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
 
   -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
 
   -- Set autocommands conditional on server_capabilities
@@ -73,21 +66,24 @@ local on_attach = function(client, bufnr)
 
 end
 
-
 -- ESLINT Server
 local eslint = {
   lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
   lintStdin = true,
-  lintFormats = {"%f:%l:%c: %m"},
   lintIgnoreExitCode = true,
-  formatCommand = "yarn prettier --write {INPUT}",
-  formatStdin = true
 }
+
+local prettier = {
+	formatCommand = "./node_modules/.bin/prettier --stdin-filepath=${INPUT}",
+	formatStdin = true
+}
+
 
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
 -- If you are adding a new language server remember that you need to install the LSP for it https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
-local servers = { "tsserver", "jsonls", "rust_analyzer", "html", "graphql", "dockerls", "clangd", "bashls" }
+local servers = { "jsonls", "rust_analyzer", "html", "graphql", "dockerls", "clangd", "bashls" }
+-- Servers with extra overrides are at the bottom
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { 
     on_attach = on_attach
@@ -103,12 +99,20 @@ for _, lsp in ipairs(servers) do
    }
 end
 
+-- Servers With Custom Overrides
+
+nvim_lsp.tsserver.setup {
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = false
+    set_lsp_config(client, bufnr)
+  end
+} 
+
 -- Custom EFM just for ESLINT
 nvim_lsp.efm.setup {
-  on_attach = function(client)
-    client.resolved_capabilities.document_formatting = true
-    client.resolved_capabilities.goto_definition = false
-    -- set_lsp_config(client)
+	init_options = {documentFormatting = true},
+  on_attach = function(client, bufnr)
+    set_lsp_config(client, bufnr)
   end,
   root_dir = function()
     if not eslint_config_exists() then
@@ -118,12 +122,18 @@ nvim_lsp.efm.setup {
   end,
   settings = {
     languages = {
-      javascript = {eslint},
-      javascriptreact = {eslint},
-      ["javascript.jsx"] = {eslint},
-      typescript = {eslint},
-      ["typescript.tsx"] = {eslint},
-      typescriptreact = {eslint}
+      javascript = {prettier, eslint},
+      javascriptreact = {prettier, eslint},
+      ["javascript.jsx"] = {prettier, eslint},
+      typescript = {prettier, eslint},
+      ["typescript.tsx"] = {prettier, eslint},
+      typescriptreact = {prettier, eslint},
+			yaml = {prettier},
+			json = {prettier},
+			html = {prettier},
+			scss = {prettier},
+			css = {prettier},
+			markdown = {prettier},
     }
   },
   filetypes = {
