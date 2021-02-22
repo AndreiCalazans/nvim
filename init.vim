@@ -395,7 +395,7 @@ endif
 
 command! -bang -nargs=* Rg 
     \  call fzf#vim#grep(
-    \  "rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>),
+    \  'rg --column --line-number --no-heading --color=always --smart-case -g "!{node_modules,.git}" '.shellescape(<q-args>),
     \  1,
     \  fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}),
     \  <bang>0) 
