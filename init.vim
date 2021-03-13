@@ -73,6 +73,11 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
+" TO trigger completion with Tab
+imap <tab> <Plug>(completion_smart_tab)
+imap <s-tab> <Plug>(completion_smart_s_tab)
+
+
 "" Vim-Session
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
