@@ -183,6 +183,18 @@ syntax on
 set ruler
 set number
 
+function! MyHighlights() abort
+    hi Visual              ctermbg=22  guibg=#E06E6E
+    hi CursorLine          ctermbg=22   cterm=none
+    hi CursorLineNr        ctermfg=22               cterm=none
+    hi Comment             ctermfg=32
+endfunction
+
+augroup MyColors
+    autocmd!
+    autocmd ColorScheme molokai call MyHighlights()
+augroup END
+
 " Cursor
 set cursorline
 
