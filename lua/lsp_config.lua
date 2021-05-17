@@ -82,11 +82,11 @@ local prettier = {
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
 -- If you are adding a new language server remember that you need to install the LSP for it https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
-local servers = { "jsonls", "rust_analyzer", "html", "graphql", "dockerls", "clangd", "bashls" }
+local servers = { "jsonls", "rust_analyzer", "html", "graphql", "dockerls", "clangd", "bashls", "dartls" }
 -- Servers with extra overrides are at the bottom
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { 
-    on_attach = on_attach
+    on_attach = set_lsp_config
     -- Uncomment the following if you want to remove LSP written errors to buffer
     -- handlers = {
     --    ["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -100,6 +100,13 @@ for _, lsp in ipairs(servers) do
 end
 
 -- Servers With Custom Overrides
+
+nvim_lsp.sqlls.setup{
+  cmd = {"sql-language-server", "up", "--method", "stdio"},
+  on_attach = function(client, bufnr)
+    set_lsp_config(client, bufnr)
+  end
+}
 
 nvim_lsp.tsserver.setup {
   on_attach = function(client, bufnr)

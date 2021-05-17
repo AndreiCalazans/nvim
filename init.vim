@@ -25,8 +25,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "" Plug install packages
 "*****************************************************************************
 Plug 'junegunn/goyo.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
+" Plug 'scrooloose/nerdtree'
+" Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -74,8 +74,8 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 " TO trigger completion with Tab
-imap <tab> <Plug>(completion_smart_tab)
-imap <s-tab> <Plug>(completion_smart_s_tab)
+imap <Tab> <Plug>(completion_smart_tab)
+imap <S-Tab> <Plug>(completion_smart_s_tab)
 
 
 "" Vim-Session
@@ -193,6 +193,10 @@ function! MyHighlights() abort
     hi CursorLine          ctermbg=22   cterm=none
     hi CursorLineNr        ctermfg=22               cterm=none
     hi Comment             ctermfg=32
+
+    " Make background transparent
+    hi Normal ctermbg=none guibg=none
+    hi NonText ctermbg=none guibg=none
 endfunction
 
 augroup MyColors
@@ -205,6 +209,7 @@ set cursorline
 
 let no_buffers_menu=1
 silent! colorscheme molokai
+" silent! colorscheme blue
 
 let g:molokai_original = 1
 
@@ -281,17 +286,22 @@ cnoreabbrev Q q
 cnoreabbrev Qall qall
 
 "" NERDTree configuration
-let g:NERDTreeChDirMode=2
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
-let NERDTreeShowHidden=1
+" let g:NERDTreeChDirMode=2
+" let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+" let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+" let g:NERDTreeShowBookmarks=1
+" let g:nerdtree_tabs_focus_on_files=1
+" let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+" let g:NERDTreeWinSize = 50
+" let NERDTreeShowHidden=1
+" nnoremap <silent> <leader>nf :NERDTreeFind<CR>
+" nnoremap <silent> <leader>ne :NERDTreeToggle<CR>
+
+" Netwr
+nnoremap <silent> <leader>ne :Explore<CR>
+let g:netrw_banner=0
+
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
-nnoremap <silent> <leader>nf :NERDTreeFind<CR>
-nnoremap <silent> <leader>ne :NERDTreeToggle<CR>
 
 " terminal emulation
 nnoremap <silent> <leader>sh :terminal<CR>
@@ -410,6 +420,17 @@ if executable('rg')
 
 endif
 
+" Testing using a custom RG to use just ripgrep See https://github.com/junegunn/fzf.vim/issues/1081
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -g "!{yarn.lock}" -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
 command! -bang -nargs=* Rg 
     \  call fzf#vim#grep(
     \  'rg --column --line-number --no-heading --color=always --smart-case -g "!{node_modules,.git}" '.shellescape(<q-args>),
@@ -420,7 +441,9 @@ command! -bang -nargs=* Rg
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>e :FZF -m<CR>
-nnoremap <silent> <leader>f :Rg<CR>
+" nnoremap <silent> <leader>f :Rg<CR> // remove once you are happy with the
+" new RG
+nnoremap <silent> <leader>f :RG<CR>
 
 
 
@@ -458,6 +481,7 @@ noremap <leader>x :bn<CR>
 
 "" Close buffer
 noremap <leader>c :bd<CR>
+" :bdelete[!] {bufname}						*E93* *E94*
 
 "" Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
