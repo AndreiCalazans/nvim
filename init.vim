@@ -1,8 +1,8 @@
 
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 
-let g:python3_host_prog = '/usr/local/bin/python3'
-let g:python_host_prog  = '/usr/local/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
+let g:python_host_prog  = '/usr/bin/python'
 
 if !filereadable(vimplug_exists)
   if !executable("curl")
@@ -25,8 +25,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "" Plug install packages
 "*****************************************************************************
 Plug 'junegunn/goyo.vim'
-" Plug 'scrooloose/nerdtree'
-" Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -41,18 +39,8 @@ Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --clangd-completer' }
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-" set rtp+=/usr/local/opt/fzf
-"
- if isdirectory('/usr/local/opt/fzf')
-   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
- else
-   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
- endif
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
  let g:make = 'gmake'
  if exists('make')
