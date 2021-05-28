@@ -130,6 +130,8 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 
+set spell spelllang=en_us
+
 "" Fix backspace indent
 set backspace=indent,eol,start
 
