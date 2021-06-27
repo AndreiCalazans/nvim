@@ -76,6 +76,8 @@ Plug 'honza/vim-snippets'
 
 "" Color
 Plug 'tomasr/molokai'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
+
 
 "*****************************************************************************
 "" Custom bundles
@@ -176,7 +178,7 @@ let g:session_command_aliases = 1
 "*****************************************************************************
 syntax on
 set ruler
-set number
+set number relativenumber
 
 function! MyHighlights() abort
     hi Visual              ctermbg=22  guibg=#E06E6E
@@ -189,24 +191,35 @@ function! MyHighlights() abort
     hi NonText ctermbg=none guibg=none
 endfunction
 
-augroup MyColors
-    autocmd!
-    autocmd ColorScheme molokai call MyHighlights()
-augroup END
+" augroup MyColors
+"     autocmd!
+"     autocmd ColorScheme molokai call MyHighlights()
+" augroup END
 
 " Cursor
 set cursorline
 
 let no_buffers_menu=1
-silent! colorscheme molokai
+" silent! colorscheme molokai
 " silent! colorscheme blue
 
-let g:molokai_original = 1
+" let g:molokai_original = 1
+
+
+colorscheme onehalfdark
+let g:lightline = { 'colorscheme': 'onehalfdark' }
+
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
 
 set mousemodel=popup
 set t_Co=256
 set guioptions=egmrti
-set gfn=Monospace\ 10
+
 
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
@@ -222,9 +235,7 @@ else
   let g:indentLine_char = '┆'
   let g:indentLine_faster = 1
 
-  
 endif
-
 
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
@@ -253,43 +264,21 @@ if exists("*fugitive#statusline")
 endif
 
 " vim-airline
-let g:airline_theme = 'powerlineish'
+"
+let g:airline_theme='onehalfdark'
+
+" let g:airline_theme = 'powerlineish'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
-"*****************************************************************************
-"" Abbreviations
-"*****************************************************************************
-"" no one is really happy until you have this shortcuts
-cnoreabbrev W! w!
-cnoreabbrev Q! q!
-cnoreabbrev Qall! qall!
-cnoreabbrev Wq wq
-cnoreabbrev Wa wa
-cnoreabbrev wQ wq
-cnoreabbrev WQ wq
-cnoreabbrev W w
-cnoreabbrev Q q
-cnoreabbrev Qall qall
 
-"" NERDTree configuration
-" let g:NERDTreeChDirMode=2
-" let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-" let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-" let g:NERDTreeShowBookmarks=1
-" let g:nerdtree_tabs_focus_on_files=1
-" let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-" let g:NERDTreeWinSize = 50
-" let NERDTreeShowHidden=1
-" nnoremap <silent> <leader>nf :NERDTreeFind<CR>
-" nnoremap <silent> <leader>ne :NERDTreeToggle<CR>
+nnoremap <silent>- :Explore<CR>
 
-" Netwr
-nnoremap <silent> <leader>ne :Explore<CR>
 let g:netrw_banner=0
+let g:netrw_rmdir_cmd="rm -rf"
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
@@ -378,6 +367,11 @@ nnoremap <leader>sc :CloseSession<CR>
 "" Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
+
+    " .use(headings)
+" Notes Tagging System
+nnoremap <leader>tt :!ctags -R --exclude=node_modules . <CR>
+nnoremap <leader>ni :e $NOTES_DIR/tags<CR>
 
 
 "" Set working directory
@@ -512,17 +506,8 @@ augroup vimrc-javascript
 augroup END
 
 
-" rust
-" Vim racer
-" au FileType rust nmap gd <Plug>(rust-def)
-" au FileType rust nmap gs <Plug>(rust-def-split)
-" au FileType rust nmap gx <Plug>(rust-def-vertical)
-" au FileType rust nmap <leader>gd <Plug>(rust-doc)
-
-
 " typescript
 let g:yats_host_keyword = 1
-
 
 
 "*****************************************************************************
