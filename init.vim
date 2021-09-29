@@ -42,6 +42,7 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+
  let g:make = 'gmake'
  if exists('make')
          let g:make = 'make'
@@ -118,7 +119,6 @@ call plug#end()
 
 " NeoVim's LSP Set UP
 lua require("lsp_config")
-" 
 
 " Required:
 filetype plugin indent on
@@ -132,7 +132,8 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 
-set spell spelllang=en_us
+" set spell spelllang=en_us
+set nospell
 
 "" Fix backspace indent
 set backspace=indent,eol,start
@@ -178,7 +179,7 @@ let g:session_command_aliases = 1
 "*****************************************************************************
 syntax on
 set ruler
-set number relativenumber
+set number
 
 function! MyHighlights() abort
     hi Visual              ctermbg=22  guibg=#E06E6E
@@ -343,19 +344,26 @@ set autoread
 "" Split
 noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
+noremap <Leader>vf :vertical resize 180<CR>
+noremap <Leader>hf :resize 40<CR>
 
 "" Git
 " noremap <Leader>ga :Gwrite<CR>
 " noremap <Leader>gc :Gcommit<CR>
 " noremap <Leader>gsh :Gpush<CR>
 " noremap <Leader>gll :Gpull<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
+noremap <Leader>gs :Git<CR>
+noremap <Leader>gb :Git blame<CR>
 " noremap <Leader>gd :Gvdiff<CR>
 " noremap <Leader>gr :Gremove<CR>
 
 " Get commit history for current file
 noremap <Leader>gh :Git log --follow -- %<CR>
+
+" Git Gutter
+noremap <Leader>ggn :GitGutterNextHunk<CR>
+noremap <Leader>ggp :GitGutterPrevHunk<CR>
+noremap <Leader>ggu :GitGutterUndoHunk<CR>
 
 
 " session management
