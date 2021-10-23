@@ -1,21 +1,5 @@
 local nvim_lsp = require('lspconfig')
 
-local function eslint_config_exists()
-  local eslintrc = vim.fn.glob(".eslintrc*", 0, 1)
-
-  if not vim.tbl_isempty(eslintrc) then
-    return true
-  end
-
-  if vim.fn.filereadable("package.json") then
-    if vim.fn.json_decode(vim.fn.readfile("package.json"))["eslintConfig"] then
-      return true
-    end
-  end
-
-  return false
-end
-
 local set_lsp_config = function(client, bufnr)
 	require'completion'.on_attach(client)
 	print("LSP started.");
@@ -66,19 +50,6 @@ local set_lsp_config = function(client, bufnr)
 
 end
 
--- ESLINT Server
-local eslint = {
-  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
-  lintStdin = true,
-  lintIgnoreExitCode = true,
-}
-
-local prettier = {
-	formatCommand = "./node_modules/.bin/prettier --stdin-filepath=${INPUT}",
-	formatStdin = true
-}
-
-
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
 -- If you are adding a new language server remember that you need to install the LSP for it https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
@@ -115,40 +86,62 @@ nvim_lsp.tsserver.setup {
   end
 } 
 
--- Custom EFM just for ESLINT
-nvim_lsp.efm.setup {
-	init_options = {documentFormatting = true},
+nvim_lsp.diagnosticls.setup {
   on_attach = function(client, bufnr)
     set_lsp_config(client, bufnr)
   end,
-  root_dir = function()
-    if not eslint_config_exists() then
-      return nil
-    end
-    return vim.fn.getcwd()
-  end,
-  settings = {
-    languages = {
-      javascript = {prettier, eslint},
-      javascriptreact = {prettier, eslint},
-      ["javascript.jsx"] = {prettier, eslint},
-      typescript = {prettier, eslint},
-      ["typescript.tsx"] = {prettier, eslint},
-      typescriptreact = {prettier, eslint},
-			yaml = {prettier},
-			json = {prettier},
-			html = {prettier},
-			scss = {prettier},
-			css = {prettier},
-			markdown = {prettier},
+  filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'markdown', 'pandoc' },
+  init_options = {
+    linters = {
+      eslint = {
+        command = 'eslint_d',
+        rootPatterns = { '.git' },
+        debounce = 100,
+        args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
+        sourceName = 'eslint_d',
+        parseJson = {
+          errorsRoot = '[0].messages',
+          line = 'line',
+          column = 'column',
+          endLine = 'endLine',
+          endColumn = 'endColumn',
+          message = '[eslint] ${message} [${ruleId}]',
+          security = 'severity'
+        },
+        securities = {
+          [2] = 'error',
+          [1] = 'warning'
+        }
+      },
+    },
+    filetypes = {
+      javascript = 'eslint',
+      javascriptreact = 'eslint',
+      typescript = 'eslint',
+      typescriptreact = 'eslint',
+    },
+    formatters = {
+      eslint_d = {
+        command = 'eslint_d',
+        args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
+        rootPatterns = { '.git' },
+      },
+      prettier = {
+        command = 'prettier',
+        args = { '--stdin-filepath', '%filename' }
+      }
+    },
+    formatFiletypes = {
+      css = 'prettier',
+      javascript = 'prettier',
+      javascriptreact = 'prettier',
+      json = 'prettier',
+      scss = 'prettier',
+      less = 'prettier',
+      typescript = 'prettier',
+      typescriptreact = 'prettier',
+      json = 'prettier',
+      markdown = 'prettier',
     }
-  },
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescript.tsx",
-    "typescriptreact"
-  },
+  }
 }
