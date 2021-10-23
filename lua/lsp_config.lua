@@ -1,7 +1,7 @@
 local nvim_lsp = require('lspconfig')
 
 local set_lsp_config = function(client, bufnr)
-	require'completion'.on_attach(client)
+	require'completion'.on_attach(client, bufnr)
 	print("LSP started.");
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -145,3 +145,28 @@ nvim_lsp.diagnosticls.setup {
     }
   }
 }
+
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    disable = {},
+  },
+  indent = {
+    enable = false,
+    disable = {},
+  },
+  ensure_installed = {
+    "tsx",
+    "toml",
+    "json",
+    "yaml",
+    "html",
+    "css",
+    "lua",
+    "go",
+    "scss"
+  },
+}
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.tsx.used_by = { "javascript", "typescript.tsx" }
