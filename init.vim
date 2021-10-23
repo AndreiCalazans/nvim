@@ -208,8 +208,8 @@ let no_buffers_menu=1
 " let g:molokai_original = 1
 
 
-colorscheme onehalfdark
-let g:lightline = { 'colorscheme': 'onehalfdark' }
+colorscheme darkblue
+let g:lightline = { 'colorscheme': 'darkblue' }
 
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -267,7 +267,7 @@ endif
 
 " vim-airline
 "
-let g:airline_theme='onehalfdark'
+let g:airline_theme='darkblue'
 
 " let g:airline_theme = 'powerlineish'
 let g:airline#extensions#branch#enabled = 1
