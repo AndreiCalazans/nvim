@@ -24,7 +24,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
-Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -44,13 +43,38 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 
- let g:make = 'gmake'
- if exists('make')
-         let g:make = 'make'
- endif
+"" Vim-Session
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
 
+"" Color
+Plug 'tomasr/molokai'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
+
+" c
+Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
+Plug 'ludwig/split-manpage.vim'
+
+let g:make = 'gmake'
+if exists('make')
+       let g:make = 'make'
+endif
 
 Plug 'Shougo/vimproc.vim', {'do': g:make}
+
+"" Include user's extra bundle
+if filereadable(expand("~/.config/nvim/local_bundles.vim"))
+  source ~/.config/nvim/local_bundles.vim
+endif
+
+call plug#end()
+
+"*****************************************************************************
+"*****************************************************************************
+
+" NeoVim's LSP Set UP
+lua require("lsp_config")
+
 
 " nvim-lua/completion-nvim recommendations
 " Use <Tab> and <S-Tab> to navigate through popup menu
@@ -67,59 +91,6 @@ set shortmess+=c
 imap <Tab> <Plug>(completion_smart_tab)
 imap <S-Tab> <Plug>(completion_smart_s_tab)
 
-
-"" Vim-Session
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
-
-"" Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
-"" Color
-Plug 'tomasr/molokai'
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
-
-
-"*****************************************************************************
-"" Custom bundles
-"*****************************************************************************
-
-" c
-Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-Plug 'ludwig/split-manpage.vim'
-
-
-" javascript
-"" Javascript Bundle
-Plug 'jelera/vim-javascript-syntax'
-
-" " rust
-" " Vim racer
-" Plug 'racer-rust/vim-racer'
-
-" " Rust.vim
-" Plug 'rust-lang/rust.vim'
-
-
-" typescript
-Plug 'leafgarland/typescript-vim'
-Plug 'HerringtonDarkholme/yats.vim'
-
-
-"*****************************************************************************
-"*****************************************************************************
-
-"" Include user's extra bundle
-if filereadable(expand("~/.config/nvim/local_bundles.vim"))
-  source ~/.config/nvim/local_bundles.vim
-endif
-
-call plug#end()
-
-
-" NeoVim's LSP Set UP
-lua require("lsp_config")
 
 " Required:
 filetype plugin indent on
@@ -308,11 +279,6 @@ endif
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
-"" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
-augroup vimrc-sync-fromstart
-  autocmd!
-  autocmd BufEnter * :syntax sync maxlines=200
-augroup END
 
 "" Remember cursor position
 augroup vimrc-remember-cursor-position
@@ -338,9 +304,6 @@ set autoread
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
-
-" map <leader>gd :YcmCompleter GoTo<CR>
-" map <leader>gr :YcmCompleter GoToReferences<CR>
 
 "" Split
 noremap <Leader>h :<C-u>split<CR>
@@ -376,11 +339,6 @@ nnoremap <leader>sc :CloseSession<CR>
 "" Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
-
-    " .use(headings)
-" Notes Tagging System
-nnoremap <leader>tt :!ctags -R --exclude=node_modules . <CR>
-nnoremap <leader>ni :e $NOTES_DIR/tags<CR>
 
 
 "" Set working directory
@@ -433,26 +391,16 @@ command! -bang -nargs=* Rg
 
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>e :FZF -m<CR>
+nnoremap <silent> <leader>e :Files<CR>
 " nnoremap <silent> <leader>f :Rg<CR> // remove once you are happy with the
 " new RG
 nnoremap <silent> <leader>f :RG<CR>
-
 
 
 "Recovery commands from history through FZF
 nmap <leader>y :History:<CR>
 nmap <leader>Y :History<CR>
 
-" snippets
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
-
-" Tagbar
-nmap <silent> <F4> :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
 
 " Disable visualbell
 set noerrorbells visualbell t_vb=
@@ -503,20 +451,6 @@ nnoremap <Leader>o :.Gbrowse<CR>
 " c
 autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
 autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
-
-
-" javascript
-let g:javascript_enable_domhtmlcss = 1
-
-" vim-javascript
-augroup vimrc-javascript
-  autocmd!
-  autocmd FileType javascript setl tabstop=2|setl shiftwidth=2|setl expandtab softtabstop=2
-augroup END
-
-
-" typescript
-let g:yats_host_keyword = 1
 
 
 "*****************************************************************************
