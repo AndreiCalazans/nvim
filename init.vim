@@ -30,7 +30,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'Raimondi/delimitMate'
-Plug 'majutsushi/tagbar'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
@@ -42,18 +41,15 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-
-"" Vim-Session
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
-
 "" Color
 Plug 'tomasr/molokai'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'cormacrelf/vim-colors-github'
+Plug 'arcticicestudio/nord-vim'
 
 " c
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-Plug 'ludwig/split-manpage.vim'
+Plug 'ludwig/split-manpage.vim' " use <leader>K on word or :Man
 
 let g:make = 'gmake'
 if exists('make')
@@ -61,11 +57,6 @@ if exists('make')
 endif
 
 Plug 'Shougo/vimproc.vim', {'do': g:make}
-
-"" Include user's extra bundle
-if filereadable(expand("~/.config/nvim/local_bundles.vim"))
-  source ~/.config/nvim/local_bundles.vim
-endif
 
 call plug#end()
 
@@ -87,11 +78,6 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
-" TO trigger completion with Tab
-imap <Tab> <Plug>(completion_smart_tab)
-imap <S-Tab> <Plug>(completion_smart_s_tab)
-
-
 " Required:
 filetype plugin indent on
 
@@ -99,6 +85,11 @@ filetype plugin indent on
 "*****************************************************************************
 "" Basic Setup
 "*****************************************************************************"
+
+"" Map leader to ,
+let mapleader=','
+
+
 "" Encoding
 set encoding=utf-8
 set fileencoding=utf-8
@@ -115,9 +106,6 @@ set tabstop=2
 set softtabstop=0
 set shiftwidth=2
 set expandtab
-
-"" Map leader to ,
-let mapleader=','
 
 "" Enable hidden buffers
 set hidden
@@ -140,12 +128,6 @@ else
     set shell=/bin/sh
 endif
 
-" session management
-let g:session_directory = "~/.config/nvim/session"
-let g:session_autoload = "no"
-let g:session_autosave = "no"
-let g:session_command_aliases = 1
-
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
@@ -153,34 +135,19 @@ syntax on
 set ruler
 set number
 
-function! MyHighlights() abort
-    hi Visual              ctermbg=22  guibg=#E06E6E
-    hi CursorLine          ctermbg=22   cterm=none
-    hi CursorLineNr        ctermfg=22               cterm=none
-    hi Comment             ctermfg=32
 
-    " Make background transparent
-    hi Normal ctermbg=none guibg=none
-    hi NonText ctermbg=none guibg=none
-endfunction
+" Colors
 
-" augroup MyColors
-"     autocmd!
-"     autocmd ColorScheme molokai call MyHighlights()
-" augroup END
+" use the dark or light theme for the github theme
+set background=light
+
+colorscheme github
+let g:airline_theme = "github"
 
 " Cursor
 set cursorline
-
 let no_buffers_menu=1
-" silent! colorscheme molokai
-" silent! colorscheme blue
 
-" let g:molokai_original = 1
-
-
-colorscheme darkblue
-let g:lightline = { 'colorscheme': 'onehalfdark' }
 
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -193,22 +160,13 @@ set mousemodel=popup
 set t_Co=256
 set guioptions=egmrti
 
+let g:CSApprox_loaded = 1
+" IndentLine
+let g:indentLine_enabled = 1
+let g:indentLine_concealcursor = 0
+let g:indentLine_char = '┆'
+let g:indentLine_faster = 1
 
-if has("gui_running")
-  if has("gui_mac") || has("gui_macvim")
-    set guifont=Menlo:h12
-    set transparency=7
-  endif
-else
-  let g:CSApprox_loaded = 1
-
-  " IndentLine
-  let g:indentLine_enabled = 1
-  let g:indentLine_concealcursor = 0
-  let g:indentLine_char = '┆'
-  let g:indentLine_faster = 1
-
-endif
 
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
@@ -237,17 +195,13 @@ if exists("*fugitive#statusline")
 endif
 
 " vim-airline
-"
-let g:airline_theme='onehalfdark'
-
-" let g:airline_theme = 'powerlineish'
 let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
 
+" Netrw
 nnoremap <silent>- :Explore<CR>
 
 let g:netrw_banner=0
@@ -312,14 +266,8 @@ noremap <Leader>vf :vertical resize 180<CR>
 noremap <Leader>hf :resize 40<CR>
 
 "" Git
-" noremap <Leader>ga :Gwrite<CR>
-" noremap <Leader>gc :Gcommit<CR>
-" noremap <Leader>gsh :Gpush<CR>
-" noremap <Leader>gll :Gpull<CR>
 noremap <Leader>gs :Git<CR>
 noremap <Leader>gb :Git blame<CR>
-" noremap <Leader>gd :Gvdiff<CR>
-" noremap <Leader>gr :Gremove<CR>
 
 " Get commit history for current file
 noremap <Leader>gh :Git log --follow -- %<CR>
@@ -328,17 +276,6 @@ noremap <Leader>gh :Git log --follow -- %<CR>
 noremap <Leader>ggn :GitGutterNextHunk<CR>
 noremap <Leader>ggp :GitGutterPrevHunk<CR>
 noremap <Leader>ggu :GitGutterUndoHunk<CR>
-
-
-" session management
-nnoremap <leader>so :OpenSession<Space>
-nnoremap <leader>ss :SaveSession<Space>
-nnoremap <leader>sd :DeleteSession<CR>
-nnoremap <leader>sc :CloseSession<CR>
-
-"" Tabs
-nnoremap <Tab> gt
-nnoremap <S-Tab> gT
 
 
 "" Set working directory
@@ -382,18 +319,9 @@ endfunction
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
-command! -bang -nargs=* Rg 
-    \  call fzf#vim#grep(
-    \  'rg --column --line-number --no-heading --color=always --smart-case -g "!{node_modules,.git}" '.shellescape(<q-args>),
-    \  1,
-    \  fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}),
-    \  <bang>0) 
-
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>e :Files<CR>
-" nnoremap <silent> <leader>f :Rg<CR> // remove once you are happy with the
-" new RG
 nnoremap <silent> <leader>f :RG<CR>
 
 

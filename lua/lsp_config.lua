@@ -53,7 +53,7 @@ end
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
 -- If you are adding a new language server remember that you need to install the LSP for it https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
-local servers = { "jsonls", "rust_analyzer", "html", "graphql", "dockerls", "clangd", "bashls", "dartls" }
+local servers = { "jsonls", "rust_analyzer", "html", "graphql", "dockerls", "clangd", "bashls", "dartls", "prismals" }
 -- Servers with extra overrides are at the bottom
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { 
