@@ -277,6 +277,9 @@ noremap <Leader>ggn :GitGutterNextHunk<CR>
 noremap <Leader>ggp :GitGutterPrevHunk<CR>
 noremap <Leader>ggu :GitGutterUndoHunk<CR>
 
+" Eslint Helper
+
+command Esformat !eslint_d --fix %
 
 "" Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
