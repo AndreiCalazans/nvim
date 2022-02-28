@@ -1,7 +1,7 @@
 local nvim_lsp = require('lspconfig')
+local coq = require 'coq'
 
 local set_lsp_config = function(client, bufnr)
-	require'completion'.on_attach(client, bufnr)
 	print("LSP started.");
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -53,7 +53,7 @@ end
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
 -- If you are adding a new language server remember that you need to install the LSP for it https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
-local servers = { "jsonls", "rust_analyzer", "html", "graphql", "dockerls", "clangd", "bashls", "dartls", "prismals" }
+local servers = { "gopls", "jsonls", "rust_analyzer", "html", "graphql", "dockerls", "clangd", "bashls", "dartls", "prismals" }
 -- Servers with extra overrides are at the bottom
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { 
@@ -97,7 +97,7 @@ nvim_lsp.diagnosticls.setup {
         command = 'eslint_d',
         rootPatterns = { '.git' },
         debounce = 100,
-        args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
+        args = { '--eslint-path=./node_modules/.bin/eslint', '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
         sourceName = 'eslint_d',
         parseJson = {
           errorsRoot = '[0].messages',
@@ -121,11 +121,6 @@ nvim_lsp.diagnosticls.setup {
       typescriptreact = 'eslint',
     },
     formatters = {
-      eslint_d = {
-        command = 'eslint_d',
-        args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
-        rootPatterns = { '.git' },
-      },
       prettier = {
         rootPatterns = { '.git' },
         command = './node_modules/.bin/prettier',
@@ -171,3 +166,6 @@ require'nvim-treesitter.configs'.setup {
 
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.tsx.used_by = { "javascript", "typescript.tsx" }
+
+nvim_lsp.tsserver.setup(coq.lsp_ensure_capabilities{})
+vim.cmd('COQnow -s')

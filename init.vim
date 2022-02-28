@@ -35,7 +35,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
+Plug 'ms-jpq/coq_nvim', { 'branch': 'coq' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
