@@ -39,7 +39,7 @@ endif
 " range_formatting in visual mode
 xmap <Leader>P <Plug>(prettier-format)
 " formatting in normal mode
-nmap <Leader>p <Plug>(prettier-format)
+nmap <Leader>p :!prettier --write "%"<cr>
 
 " Find files using Telescope command-line sugar.
 nnoremap <leader>e <cmd>Telescope find_files<cr>
@@ -49,4 +49,18 @@ nnoremap <leader>h <cmd>Telescope help_tags<cr>
 nnoremap <leader>Y <cmd>Telescope command_history<cr>
 nnoremap <leader>y <cmd>Telescope oldfiles<cr>
 
+nnoremap <leader>c :bd<cr>
+nnoremap <leader>n :set nu<cr> " Show numbers
+nnoremap <leader>N :set nonu<cr> " Hide numbers
 
+nnoremap <leader>D :lua vim.diagnostic.config({virtual_text = false})<cr>
+nnoremap <leader>d :lua vim.diagnostic.config({virtual_text = true})<cr>
+
+" TODO  - ident based on filetype
+setlocal tabstop=2
+setlocal shiftwidth=2
+" Don't show error column on the right since it is redundant
+set signcolumn=no
+
+" Show line
+set cursorline 
