@@ -57,8 +57,8 @@ nnoremap <leader>D :lua vim.diagnostic.config({virtual_text = false})<cr>
 nnoremap <leader>d :lua vim.diagnostic.config({virtual_text = true})<cr>
 
 " TODO  - ident based on filetype
-setlocal tabstop=2
-setlocal shiftwidth=2
+set tabstop=2
+set shiftwidth=2
 " Don't show error column on the right since it is redundant
 set signcolumn=no
 
