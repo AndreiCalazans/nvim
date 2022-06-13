@@ -60,4 +60,7 @@ set signcolumn=no
 " Show line
 set cursorline 
 
+" Allow switching buffers that are not yet saved
+set hidden
+
 colorscheme torte
