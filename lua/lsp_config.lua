@@ -52,20 +52,8 @@ for _, lsp in pairs(servers) do
   }))
 end
 
-require("prettier").setup({
-  bin = 'prettier',
-  filetypes = {
-    "css",
-    "graphql",
-    "html",
-    "javascript",
-    "javascriptreact",
-    "json",
-    "less",
-    "markdown",
-    "scss",
-    "typescript",
-    "typescriptreact",
-    "yaml",
-  }
+require("null-ls").setup({
+    sources = {
+        require("null-ls").builtins.formatting.prettier,
+    },
 })

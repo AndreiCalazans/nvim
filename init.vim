@@ -3,6 +3,7 @@ call plug#begin()
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'windwp/nvim-autopairs'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -15,7 +16,7 @@ Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
-Plug 'MunifTanjim/prettier.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 
 call plug#end()
 
@@ -34,12 +35,6 @@ noremap <Leader>gb :Git blame<CR>
 if has('unnamedplus')
   set clipboard=unnamed,unnamedplus
 endif
-
-" Prettier
-" range_formatting in visual mode
-xmap <Leader>P <Plug>(prettier-format)
-" formatting in normal mode
-nmap <Leader>p :!prettier --write "%"<cr>
 
 " Find files using Telescope command-line sugar.
 nnoremap <leader>e <cmd>Telescope find_files<cr>
@@ -64,3 +59,5 @@ set signcolumn=no
 
 " Show line
 set cursorline 
+
+colorscheme torte
