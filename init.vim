@@ -12,6 +12,9 @@ Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 
+Plug 'lunarvim/colorschemes'
+
+
 " Telescope deps
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -63,4 +66,4 @@ set cursorline
 " Allow switching buffers that are not yet saved
 set hidden
 
-colorscheme torte
+colorscheme system76
