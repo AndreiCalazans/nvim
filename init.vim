@@ -40,9 +40,9 @@ if has('unnamedplus')
 endif
 
 " Find files using Telescope command-line sugar.
-nnoremap <leader>e <cmd>Telescope find_files<cr>
-nnoremap <leader>f <cmd>Telescope live_grep<cr>
-nnoremap <leader>b <cmd>Telescope buffers<cr>
+nnoremap <leader>e <cmd>Telescope find_files previewer=false<cr>
+nnoremap <leader>f <cmd>Telescope live_grep previewer=false<cr>
+nnoremap <leader>b <cmd>Telescope buffers previewer=false<cr>
 nnoremap <leader>h <cmd>Telescope help_tags<cr>
 nnoremap <leader>Y <cmd>Telescope command_history<cr>
 nnoremap <leader>y <cmd>Telescope oldfiles<cr>
