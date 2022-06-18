@@ -57,3 +57,46 @@ require("null-ls").setup({
         require("null-ls").builtins.formatting.prettier,
     },
 })
+
+
+local telescope = require('telescope')
+local actions = require('telescope.actions')
+local layout = require('telescope.actions.layout')
+local moveUp = 
+	actions.move_selection_previous
+	+ actions.move_selection_previous
+	+ actions.move_selection_previous
+	+ actions.move_selection_previous
+
+local moveDown = 
+	actions.move_selection_next
+	+ actions.move_selection_next
+	+ actions.move_selection_next
+	+ actions.move_selection_next
+
+
+telescope.setup{
+	defaults = {
+		mappings = {
+			i = {
+				["<C-o>"] = actions.send_selected_to_qflist + actions.open_qflist,
+				["<C-p>"] = layout.toggle_preview,
+				["<C-j>"] = actions.move_selection_next,
+				["<C-k>"] = actions.move_selection_previous,
+				["<C-u>"] = moveUp,
+				["<C-d>"] = moveDown,
+				["<C-a>"] = actions.toggle_all,
+			 },
+			n = {
+				["<C-o>"] = actions.send_selected_to_qflist + actions.open_qflist,
+				["<C-p>"] = layout.toggle_preview,
+				["<C-j>"] = actions.move_selection_next,
+				["<C-k>"] = actions.move_selection_previous,
+				["<C-u>"] = moveUp,
+				["<C-d>"] = moveDown,
+				["<C-a>"] = actions.toggle_all,
+			 }
+		}
+	}
+}
+

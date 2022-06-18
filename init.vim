@@ -46,6 +46,7 @@ nnoremap <leader>b <cmd>Telescope buffers previewer=false<cr>
 nnoremap <leader>h <cmd>Telescope help_tags<cr>
 nnoremap <leader>Y <cmd>Telescope command_history<cr>
 nnoremap <leader>y <cmd>Telescope oldfiles<cr>
+nnoremap <leader>j <cmd>Telescope jumplist<cr>
 
 nnoremap <leader>c :bd<cr>
 nnoremap <leader>n :set nu<cr> " Show numbers
@@ -54,7 +55,6 @@ nnoremap <leader>N :set nonu<cr> " Hide numbers
 nnoremap <leader>D :lua vim.diagnostic.config({virtual_text = false})<cr>
 nnoremap <leader>d :lua vim.diagnostic.config({virtual_text = true})<cr>
 
-" TODO  - ident based on filetype
 set tabstop=2
 set shiftwidth=2
 " Don't show error column on the right since it is redundant
