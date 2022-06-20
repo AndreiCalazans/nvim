@@ -66,4 +66,4 @@ set cursorline
 " Allow switching buffers that are not yet saved
 set hidden
 
-colorscheme system76
+colorscheme lunar
