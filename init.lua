@@ -90,6 +90,7 @@ local plugins = {
   "glepnir/lspsaga.nvim",
   "danilamihailov/beacon.nvim",
   "tpope/vim-commentary",
+  "github/copilot.vim",
 }
 
 local opts = {}
@@ -125,7 +126,6 @@ vim.opt.cursorline = true
 vim.opt.autoread = true
 vim.opt.hidden = true
 vim.opt.autoindent = true
-vim.opt.cmdheight = 0    -- hide command bar when not used
 vim.opt.showmatch = true -- show matching braces
 vim.opt.ttyfast = true   -- faster redrawing
 
@@ -169,4 +169,12 @@ vim.keymap.set("n", ",gs", ":Git<CR>")             -- show git status
 vim.keymap.set("n", ",gb", ":Git blame<CR>")       -- open git blame
 vim.keymap.set("n", ",d", ":bd<CR>")               -- close buffer
 vim.keymap.set("n", ",a", ":b#<CR>")               -- switch to alternate file #
-vim.keymap.set("n", "-", ":Explore<CR>")           -- Open file browser
+vim.keymap.set("n", "-", ":Explore<CR><CR>")       -- Open file browser
+vim.keymap.set("n", ",p", function()
+  vim.lsp.buf.format({
+    timeout_ms = 2000,
+    filter = function(client)
+      return client.name == "null-ls"
+    end,
+  })
+end) -- format buffer
