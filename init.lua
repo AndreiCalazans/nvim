@@ -186,3 +186,5 @@ vim.keymap.set("n", ",p", function()
 		end,
 	})
 end) -- format buffer
+
+vim.keymap.set("n", ",P", ":!bun prettier --write %<CR>") -- Use prettier to format buffer

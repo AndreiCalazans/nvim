@@ -31,40 +31,34 @@ require("neodev").setup()
 
 require("mason").setup()
 
-mason_null_ls.setup_handlers({
-  function(source_name, methods)
-    require("mason-null-ls.automatic_setup")(source_name, methods)
-  end,
-  prettier = function()
-    null_ls.register(null_ls.builtins.formatting.prettier.with({
-      filetypes = {
-        "astro",
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact",
-        "css",
-        "scss",
-        "json",
-        "graphql",
-        "markdown",
-        "yaml",
-        "html",
-        "vue",
-        "svelte",
-        "lua",
-      },
-      args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0) },
-    }))
-  end,
-})
-
 mason_null_ls.setup({
-  ensure_installed = {
-    -- Opt to list sources here, when available in mason.
-  },
+  ensure_installed = {},
   automatic_installation = false,
   automatic_setup = true, -- Recommended, but optional
+  handlers = {
+    prettier = function()
+      null_ls.register(null_ls.builtins.formatting.prettier.with({
+        filetypes = {
+          "astro",
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "css",
+          "scss",
+          "json",
+          "graphql",
+          "markdown",
+          "yaml",
+          "html",
+          "vue",
+          "svelte",
+          "lua",
+        },
+        args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0) },
+      }))
+    end,
+  }
 })
 
 null_ls.setup({
@@ -82,6 +76,7 @@ null_ls.setup({
   end,
 })
 
+        -- a0c4dc1 feat!: removing `setup_handlers` function. automatic_setup is now implicitly true. (#59) (3 days ago)
 mason_lspconfig.setup({
   ensure_installed = {
     -- Opt to list sources here, when available in mason.
