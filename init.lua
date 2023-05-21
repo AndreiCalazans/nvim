@@ -98,11 +98,20 @@ local plugins = {
 			"nvim-lua/plenary.nvim",
 		},
 	},
+	{
+		"stevearc/oil.nvim",
+		opts = {},
+		-- Optional dependencies
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
 }
 
 local opts = {}
 
 require("lazy").setup(plugins, opts)
+
+require("oil").setup()
+
 
 local CodeGPTModule = require("codegpt")
 require("lualine").setup({
@@ -177,7 +186,11 @@ vim.keymap.set("n", ",gs", ":Git<CR>") -- show git status
 vim.keymap.set("n", ",gb", ":Git blame<CR>") -- open git blame
 vim.keymap.set("n", ",d", ":bd<CR>") -- close buffer
 vim.keymap.set("n", ",a", ":b#<CR>") -- switch to alternate file #
-vim.keymap.set("n", "-", ":Explore<CR><CR>") -- Open file browser
+
+-- Used to use Netrw, trying oil.vim now.
+-- vim.keymap.set("n", "-", ":Explore<CR><CR>") -- Open file browser
+vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+
 vim.keymap.set("n", ",p", function()
 	vim.lsp.buf.format({
 		timeout_ms = 2000,
