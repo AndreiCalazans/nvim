@@ -34,6 +34,7 @@
         "/Users/andreicalazans/.local/share/nvim/lazy/mason.nvim/lua",
         "/Users/andreicalazans/.local/share/nvim/lazy/telescope-fzf-native.nvim/lua",
         "/Users/andreicalazans/.local/share/nvim/lazy/nvim-tree.lua/lua",
-        "${3rd}/luv/library"
+        "${3rd}/luv/library",
+        "${3rd}/luassert/library"
     ]
 }

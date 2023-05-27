@@ -13,6 +13,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
+  { "catppuccin/nvim", name = "catppuccin" },
 	"ellisonleao/gruvbox.nvim",
 	{
 		"dracula/vim",
@@ -112,6 +113,8 @@ require("lazy").setup(plugins, opts)
 
 require("oil").setup()
 
+require("neovide")
+
 
 local CodeGPTModule = require("codegpt")
 require("lualine").setup({
@@ -173,7 +176,8 @@ vim.cmd([[set noswapfile]])
 
 -- Appearence
 vim.o.termguicolors = true
-vim.cmd([[colorscheme gruvbox]])
+-- vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme catppuccin]])
 
 --Line numbers
 vim.wo.number = true
@@ -201,3 +205,22 @@ vim.keymap.set("n", ",p", function()
 end) -- format buffer
 
 vim.keymap.set("n", ",P", ":!bun prettier --write %<CR>") -- Use prettier to format buffer
+
+
+function setProjectRoot()
+  -- First change directory to current Buffer.
+  local current_file = vim.fn.expand('%:p')
+  local current_directory = vim.fn.fnamemodify(current_file, ':h')
+  vim.cmd('cd ' .. current_directory)
+
+  -- Then get toplevel Git root
+  local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+  if git_root ~= '' then
+    vim.cmd('cd ' .. git_root)
+    return
+  end
+
+  print('Unable to determine project root.')
+end
+
+vim.api.nvim_set_keymap('n', '<leader>.', ':lua setProjectRoot()<CR>', { silent = true })
