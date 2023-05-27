@@ -211,6 +211,11 @@ function setProjectRoot()
   -- First change directory to current Buffer.
   local current_file = vim.fn.expand('%:p')
   local current_directory = vim.fn.fnamemodify(current_file, ':h')
+
+  -- When in directory with Oil.nvim 
+  current_directory = current_directory:gsub('^oil://', '')
+
+  print(current_directory)
   vim.cmd('cd ' .. current_directory)
 
   -- Then get toplevel Git root
