@@ -19,4 +19,8 @@ if vim.g.neovide then
 	vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
 	vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
 	vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
+
+	vim.g.neovide_confirm_quit = true
+	vim.g.neovide_cursor_vfx_mode = "sonicboom"
+	vim.g.neovide_scroll_animation_length = 0.3
 end
