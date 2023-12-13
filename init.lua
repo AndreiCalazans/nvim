@@ -190,6 +190,8 @@ vim.keymap.set("n", ",gs", ":Git<CR>") -- show git status
 vim.keymap.set("n", ",gb", ":Git blame<CR>") -- open git blame
 vim.keymap.set("n", ",d", ":bd<CR>") -- close buffer
 vim.keymap.set("n", ",a", ":b#<CR>") -- switch to alternate file #
+vim.keymap.set("n", ",yf", ":let @+=expand('%')<CR>") -- yank file path to clipboard
+
 
 -- Used to use Netrw, trying oil.vim now.
 -- vim.keymap.set("n", "-", ":Explore<CR><CR>") -- Open file browser

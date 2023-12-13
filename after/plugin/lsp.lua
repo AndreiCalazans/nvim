@@ -22,10 +22,10 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
-vim.keymap.set("n", "gd", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+vim.keymap.set("n", "gd", "<cmd>Lspsaga finder<CR>", { silent = true })
 vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<cr>", { silent = true })
 vim.keymap.set({ "n", "v" }, ",ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
-vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
+-- vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
 
 require("neodev").setup()
 
@@ -111,6 +111,15 @@ require("lspconfig").tsserver.setup({
 require("lspconfig").eslint.setup({
   capabilities = capabilities,
 })
+
+require("lspconfig").elixirls.setup({
+  capabilities = capabilities,
+})
+
+require("lspconfig").gopls.setup({
+  capabilities = capabilities,
+})
+
 
 require("nvim-treesitter.configs").setup({
   -- A list of parser names, or "all"
