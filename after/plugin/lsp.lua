@@ -7,7 +7,7 @@ local format_group = vim.api.nvim_create_augroup("LspFormatting", { clear = true
 local null_ls = require("null-ls")
 
 require("lspsaga").setup({
-  code_action_icon = "💡",
+  code_action_icon = "",
   symbol_in_winbar = {
     in_custom = false,
     enable = true,
@@ -22,7 +22,9 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
-vim.keymap.set("n", "gd", "<cmd>Lspsaga finder<CR>", { silent = true })
+vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { silent = true })
+vim.keymap.set("n", "gF", "<cmd>Lspsaga finder<CR>", { silent = true })
+vim.keymap.set("n", "go", "<cmd>Lspsaga outline<CR>", { silent = true })
 vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<cr>", { silent = true })
 vim.keymap.set({ "n", "v" }, ",ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
 -- vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
@@ -120,6 +122,9 @@ require("lspconfig").gopls.setup({
   capabilities = capabilities,
 })
 
+require("lspconfig").rust_analyzer.setup({
+  capabilities = capabilities,
+})
 
 require("nvim-treesitter.configs").setup({
   -- A list of parser names, or "all"

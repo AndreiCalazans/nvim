@@ -105,6 +105,10 @@ local plugins = {
 		-- Optional dependencies
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
+  {
+    "sourcegraph/sg.nvim",
+    dependencies = { "nvim-lua/plenary.nvim",  "nvim-telescope/telescope.nvim" },
+  },
 }
 
 local opts = {}
@@ -112,6 +116,8 @@ local opts = {}
 require("lazy").setup(plugins, opts)
 
 require("oil").setup()
+
+require("sg").setup()
 
 require("neovide")
 
