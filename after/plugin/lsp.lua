@@ -120,10 +120,13 @@ require("lspconfig").gopls.setup({
   capabilities = capabilities,
 })
 
+require("lspconfig").astro.setup({
+  capabilities = capabilities,
+})
 
 require("nvim-treesitter.configs").setup({
   -- A list of parser names, or "all"
-  ensure_installed = { "c", "lua", "rust", "javascript", "typescript", "markdown", "markdown_inline", "vim" },
+  ensure_installed = { "c", "lua", "rust", "javascript", "typescript", "markdown", "markdown_inline", "vim", "astro" },
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
   auto_install = true,
