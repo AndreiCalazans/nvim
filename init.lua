@@ -24,7 +24,6 @@ local plugins = {
 	"nvim-lualine/lualine.nvim",
 	"nvim-treesitter/nvim-treesitter",
 	"lewis6991/gitsigns.nvim",
-	"christoomey/vim-tmux-navigator",
 	"tpope/vim-fugitive",
 	-- single/multi line code handler: gS - split one line into multiple, gJ - combine multiple lines into one
 	"AndrewRadev/splitjoin.vim",
@@ -89,16 +88,8 @@ local plugins = {
 		},
 	},
 	"glepnir/lspsaga.nvim",
-	"danilamihailov/beacon.nvim",
 	"tpope/vim-commentary",
 	"github/copilot.vim",
-	{
-		"dpayne/CodeGPT.nvim",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
-		},
-	},
 	{
 		"stevearc/oil.nvim",
 		opts = {},
@@ -122,7 +113,6 @@ require("sg").setup()
 require("neovide")
 
 
-local CodeGPTModule = require("codegpt")
 require("lualine").setup({
 	options = {
 		icons_enabled = true,
@@ -135,7 +125,7 @@ require("lualine").setup({
 				path = 1,
 			},
 		},
-		lualine_b = { "branch", "diff", "diagnostics", CodeGPTModule.get_status },
+		lualine_b = { "branch", "diff", "diagnostics" },
 		lualine_c = {},
 	},
 })

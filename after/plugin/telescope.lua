@@ -13,6 +13,14 @@ local moveDown = actions.move_selection_next
     + actions.move_selection_next
 
 telescope.setup({
+  pickers = {
+    find_files = {
+      hidden = true
+    },
+    live_grep = {
+      hidden = true
+    }
+  },
   defaults = {
     mappings = {
       i = {
