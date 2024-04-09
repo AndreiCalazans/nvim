@@ -205,7 +205,7 @@ end) -- format buffer
 vim.keymap.set("n", ",P", ":!bun prettier --write %<CR>") -- Use prettier to format buffer
 
 
-function setProjectRoot()
+function SetProjectRoot()
   -- First change directory to current Buffer.
   local current_file = vim.fn.expand('%:p')
   local current_directory = vim.fn.fnamemodify(current_file, ':h')
@@ -226,4 +226,4 @@ function setProjectRoot()
   print('Unable to determine project root.')
 end
 
-vim.api.nvim_set_keymap('n', '<leader>.', ':lua setProjectRoot()<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<leader>.', ':lua SetProjectRoot()<CR>', { silent = true })
