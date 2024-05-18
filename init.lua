@@ -69,7 +69,7 @@ local plugins = {
 		dependencies = {
 			-- show treesitter nodes
 			"nvim-treesitter/playground", -- enable more advanced treesitter-aware text objects
-			"nvim-treesitter/nvim-treesitter-textobjects", -- add rainbow highlighting to parens and brackets
+			-- "nvim-treesitter/nvim-treesitter-textobjects", -- add rainbow highlighting to parens and brackets
 			"p00f/nvim-ts-rainbow",
 			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
@@ -88,7 +88,6 @@ local plugins = {
 		},
 	},
 	"glepnir/lspsaga.nvim",
-	"tpope/vim-commentary",
 	"github/copilot.vim",
 	{
 		"stevearc/oil.nvim",
@@ -177,7 +176,7 @@ vim.cmd([[colorscheme catppuccin]])
 
 --Line numbers
 vim.wo.number = true
-vim.wo.colorcolumn = 80
+vim.wo.colorcolumn = "80"
 
 -- Key bindings
 
