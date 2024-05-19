@@ -75,7 +75,7 @@ local plugins = {
     },
   },
   { "stevearc/dressing.nvim", event = "VeryLazy" }, -- Navigate a code base with a really slick UI
-  "folke/neodev.nvim",                             -- for autocompletion in Lua in the config files
+  "folke/neodev.nvim",                              -- for autocompletion in Lua in the config files
   {
     "folke/trouble.nvim",
     config = true,
