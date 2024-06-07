@@ -111,6 +111,8 @@ require("sg").setup()
 
 require("neovide")
 
+require('gopen')
+
 
 require("lualine").setup({
   options = {
