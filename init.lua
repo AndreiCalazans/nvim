@@ -12,6 +12,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- added due to avant.nvim
+-- views can only be fully collapsed with the global statusline
+vim.opt.laststatus = 3
+-- Default splitting will cause your main splits to jump when opening an edgebar.
+-- To prevent this, set `splitkeep` to either `screen` or `topline`.
+vim.opt.splitkeep = "screen"
+
 local plugins = {
   { "catppuccin/nvim",        name = "catppuccin" },
   "ellisonleao/gruvbox.nvim",
@@ -21,7 +28,7 @@ local plugins = {
   },
   "nvim-tree/nvim-tree.lua",
   "nvim-tree/nvim-web-devicons",
-  "nvim-lualine/lualine.nvim",
+  -- "nvim-lualine/lualine.nvim",
   "nvim-treesitter/nvim-treesitter",
   "lewis6991/gitsigns.nvim",
   "tpope/vim-fugitive",
@@ -99,6 +106,28 @@ local plugins = {
     "sourcegraph/sg.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
   },
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    build = "make",
+    opts = {
+      provider = "openai"
+    },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below is optional, make sure to setup it properly if you have lazy=true
+      {
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+  }
 }
 
 local opts = {}
@@ -107,29 +136,29 @@ require("lazy").setup(plugins, opts)
 
 require("oil").setup()
 
-require("sg").setup()
+-- require("sg").setup()
 
 require("neovide")
 
 require('gopen')
 
 
-require("lualine").setup({
-  options = {
-    icons_enabled = true,
-    theme = "dracula",
-  },
-  sections = {
-    lualine_a = {
-      {
-        "filename",
-        path = 1,
-      },
-    },
-    lualine_b = { "branch", "diff", "diagnostics" },
-    lualine_c = {},
-  },
-})
+-- require("lualine").setup({
+--   options = {
+--     icons_enabled = true,
+--     theme = "dracula",
+--   },
+--   sections = {
+--     lualine_a = {
+--       {
+--         "filename",
+--         path = 1,
+--       },
+--     },
+--     lualine_b = { "branch", "diff", "diagnostics" },
+--     lualine_c = {},
+--   },
+-- })
 
 -- Options
 vim.g.mapleader = ","

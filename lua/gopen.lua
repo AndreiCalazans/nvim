@@ -1,12 +1,8 @@
-local function get_main_branch()
-  local handle = io.popen('git symbolic-ref refs/remotes/origin/HEAD 2> /dev/null')
+local function get_current_branch()
+  local handle = io.popen('git rev-parse --abbrev-ref HEAD 2> /dev/null')
   local result = handle:read("*a")
   handle:close()
-  if result:find('refs/remotes/origin/main') then
-    return 'main'
-  else
-    return 'master'
-  end
+  return result:gsub("\n", "") -- Remove any newline characters
 end
 
 local function gopen(args)
@@ -32,7 +28,7 @@ local function gopen(args)
   origin_url = origin_url:gsub("git@(.+):(.+)", "https://%1/%2")
   origin_url = origin_url:gsub("%.git", "")
 
-  local main_branch = get_main_branch()
+  local main_branch = get_current_branch()
 
   local line_position = tostring(line_start)
   if line_end > line_start then
