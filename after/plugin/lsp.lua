@@ -65,11 +65,6 @@ lspconfig.lua_ls.setup({
   },
 })
 
-lspconfig.denols.setup {
-  capabilities = capabilities,
-  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-}
-
 lspconfig.ts_ls.setup({
   capabilities = capabilities,
   root_dir = lspconfig.util.root_pattern("package.json"),
