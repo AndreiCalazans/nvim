@@ -65,14 +65,13 @@ lspconfig.lua_ls.setup({
   },
 })
 
-lspconfig.ts_ls.setup({
-  capabilities = capabilities,
-  root_dir = lspconfig.util.root_pattern("package.json"),
-  single_file_support = false
-})
+lspconfig.ts_ls.setup {
+  root_dir = lspconfig.util.root_pattern(".git"),
+}
 
 lspconfig.eslint.setup({
   capabilities = capabilities,
+  root_dir = lspconfig.util.root_pattern(".git"),
 })
 
 lspconfig.elixirls.setup({
