@@ -141,6 +141,7 @@ require("oil").setup()
 require("neovide")
 
 require('gopen')
+require('gcommit')
 
 
 -- require("lualine").setup({
