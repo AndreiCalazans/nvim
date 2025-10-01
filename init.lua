@@ -102,32 +102,7 @@ local plugins = {
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
-  {
-    "sourcegraph/sg.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
-  },
-  {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    build = "make",
-    opts = {
-      provider = "openai"
-    },
-    dependencies = {
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      --- The below is optional, make sure to setup it properly if you have lazy=true
-      {
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
-    },
-  }
+  "LunarVim/bigfile.nvim",
 }
 
 local opts = {}
@@ -136,12 +111,13 @@ require("lazy").setup(plugins, opts)
 
 require("oil").setup()
 
--- require("sg").setup()
-
 require("neovide")
 
 require('gopen')
 require('gcommit')
+
+-- default config
+require("bigfile").setup()
 
 
 -- require("lualine").setup({

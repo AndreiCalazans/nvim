@@ -1,4 +1,3 @@
-local lspconfig = require("lspconfig")
 local mason_lspconfig = require("mason-lspconfig")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
@@ -14,10 +13,18 @@ require("lspsaga").setup({
   },
 })
 
+local function nextDiagnostic()
+  vim.diagnostic.jump({ count = 1, float = true })
+end
+
+local function prevDiagnostic()
+  vim.diagnostic.jump({ count = -1, float = true })
+end
+
 local opts = { silent = true }
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "[d", prevDiagnostic, opts)
+vim.keymap.set("n", "]d", nextDiagnostic, opts)
 vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
 vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", opts)
@@ -35,13 +42,12 @@ mason_lspconfig.setup({
   ensure_installed = {
     -- Opt to list sources here, when available in mason.
   },
-  automatic_installation = false,
-  automatic_setup = true, -- Recommended, but optional
+  automatic_enable = false,
 })
 
 local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-lspconfig.lua_ls.setup({
+vim.lsp.config("lua_ls", {
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -65,28 +71,13 @@ lspconfig.lua_ls.setup({
   },
 })
 
-lspconfig.ts_ls.setup {
-  root_dir = lspconfig.util.root_pattern(".git"),
-}
+vim.lsp.enable("ts_ls")
 
-lspconfig.eslint.setup({
-  capabilities = capabilities,
-  root_dir = lspconfig.util.root_pattern(".git"),
-})
-
-lspconfig.elixirls.setup({
+vim.lsp.config("eslint", {
   capabilities = capabilities,
 })
 
-lspconfig.gopls.setup({
-  capabilities = capabilities,
-})
-
-lspconfig.rust_analyzer.setup({
-  capabilities = capabilities,
-})
-
-lspconfig.astro.setup({
+vim.lsp.config("gopls", {
   capabilities = capabilities,
 })
 
@@ -99,6 +90,20 @@ require("nvim-treesitter.configs").setup({
   },
 })
 
-vim.diagnostic.config({
-  virtual_text = false,
-})
+-- Current disabled ts go because it bricks my CPU.
+-- vim.diagnostic.config({
+--   virtual_text = false,
+-- })
+-- vim.lsp.config("ts_go_ls", {
+--     cmd = { "bun", "tsgo", "--lsp", "-stdio" },
+--     filetypes = {
+--         "javascript",
+--         "javascriptreact",
+--         "javascript.jsx",
+--         "typescript",
+--         "typescriptreact",
+--         "typescript.tsx",
+--     },
+--     root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+-- })
+-- vim.lsp.enable("ts_go_ls")
