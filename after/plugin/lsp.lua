@@ -70,16 +70,23 @@ vim.lsp.config("lua_ls", {
     },
   },
 })
+vim.lsp.enable("lua_ls")
 
+vim.lsp.config("ts_ls", {
+  single_file_support = false,
+})
 vim.lsp.enable("ts_ls")
+  -- single_file_support = false,
 
 vim.lsp.config("eslint", {
   capabilities = capabilities,
 })
+vim.lsp.enable("eslint")
 
 vim.lsp.config("gopls", {
   capabilities = capabilities,
 })
+vim.lsp.enable("gopls")
 
 require("nvim-treesitter.configs").setup({
   ensure_installed = { "c", "lua", "rust", "javascript", "typescript", "markdown", "markdown_inline", "vim", "astro", "go", "cpp", "c" },
