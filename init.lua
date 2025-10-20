@@ -32,17 +32,6 @@ local plugins = {
   "nvim-treesitter/nvim-treesitter",
   "lewis6991/gitsigns.nvim",
   "tpope/vim-fugitive",
-  -- single/multi line code handler: gS - split one line into multiple, gJ - combine multiple lines into one
-  "AndrewRadev/splitjoin.vim",
-  -- { "junegunn/fzf.vim",         dependencies = { { dir = vim.env.HOMEBREW_PREFIX .. "/opt/fzf" } } },
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim", -- Power telescope with FZF
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      "nvim-telescope/telescope-rg.nvim",
-    },
-  },
   {
     "williamboman/mason.nvim",
     config = true,
@@ -81,19 +70,7 @@ local plugins = {
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
   },
-  { "stevearc/dressing.nvim", event = "VeryLazy" }, -- Navigate a code base with a really slick UI
   "folke/neodev.nvim",                              -- for autocompletion in Lua in the config files
-  {
-    "folke/trouble.nvim",
-    config = true,
-    keys = {
-      { "<leader>xx", "<cmd>TroubleToggle<cr>" },
-      { "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>" },
-      { "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>" },
-      { "<leader>xq", "<cmd>TroubleToggle quickfix<cr>" },
-      { "<leader>xl", "<cmd>TroubleToggle loclist<cr>" },
-    },
-  },
   "glepnir/lspsaga.nvim",
   "github/copilot.vim",
   {
@@ -103,6 +80,14 @@ local plugins = {
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
   "LunarVim/bigfile.nvim",
+  {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    -- or if using mini.icons/mini.nvim
+    -- dependencies = { "nvim-mini/mini.icons" },
+    opts = {}
+  }
 }
 
 local opts = {}
@@ -146,6 +131,7 @@ vim.opt.showcmd = true
 vim.opt.laststatus = 2
 vim.opt.autowrite = true
 vim.opt.cursorline = true
+vim.opt.cursorcolumn = true
 vim.opt.autoread = true
 vim.opt.hidden = true
 vim.opt.autoindent = true
