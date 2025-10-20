@@ -1,11 +1,21 @@
 require("fzf-lua").setup {
-  winopts = { ... },     -- UI Options
-  keymap = { ... },      -- Neovim keymaps / fzf binds
-  actions = { ... },     -- Fzf "accept" binds
-  fzf_opts = { ... },    -- Fzf CLI flags
-  fzf_colors = { ... },  -- Fzf `--color` specification
-  hls = { ... },         -- Highlights
-  previewers = { ... },  -- Previewers options
+  winopts = { ... }, -- UI Options
+  keymap = {
+    builtin = {
+      ["<C-p>"] = "toggle-preview",
+    },
+    fzf = {
+      ["ctrl-p"] = "toggle-preview",
+      ["ctrl-d"] = "half-page-down",
+      ["ctrl-u"] = "half-page-up",
+      ["ctrl-a"] = "toggle-all",
+    },
+  },                    -- Neovim keymaps / fzf binds
+  actions = { ... },    -- Fzf "accept" binds
+  fzf_opts = { ... },   -- Fzf CLI flags
+  fzf_colors = { ... }, -- Fzf `--color` specification
+  hls = { ... },        -- Highlights
+  previewers = { ... }, -- Previewers options
   -- SPECIFIC COMMAND/PICKER OPTIONS, SEE BELOW
   -- files = { ... },
 }
