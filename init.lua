@@ -22,6 +22,7 @@ vim.opt.splitkeep = "screen"
 local plugins = {
   { "catppuccin/nvim",        name = "catppuccin" },
   "ellisonleao/gruvbox.nvim",
+  "rebelot/kanagawa.nvim",
   {
     "dracula/vim",
     lazy = false,
@@ -166,7 +167,10 @@ vim.cmd([[set noswapfile]])
 -- Appearence
 vim.o.termguicolors = true
 -- vim.cmd([[colorscheme gruvbox]])
-vim.cmd([[colorscheme catppuccin]])
+-- vim.cmd([[colorscheme catppuccin]])
+vim.cmd([[colorscheme kanagawa]])
+
+
 
 --Line numbers
 vim.wo.number = true

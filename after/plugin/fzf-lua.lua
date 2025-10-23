@@ -1,5 +1,7 @@
 require("fzf-lua").setup {
-  winopts = { ... }, -- UI Options
+  winopts = {
+    preview = { hidden = true }
+  }, -- UI Options
   keymap = {
     builtin = {
       ["<C-p>"] = "toggle-preview",
