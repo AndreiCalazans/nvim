@@ -88,7 +88,8 @@ local plugins = {
     -- or if using mini.icons/mini.nvim
     -- dependencies = { "nvim-mini/mini.icons" },
     opts = {}
-  }
+  },
+  "sasja-san/codered-nvim"
 }
 
 local opts = {}
@@ -194,7 +195,7 @@ vim.keymap.set("n", ",p", function()
   vim.lsp.buf.format()
 end)                                                      -- format buffer
 
-vim.keymap.set("n", ",P", ":!bun prettier --write %<CR>") -- Use prettier to format buffer
+vim.keymap.set("n", ",P", ":!bun oxfmt --write %<CR>") -- Use oxfmt to format buffer
 
 
 function SetProjectRoot()
