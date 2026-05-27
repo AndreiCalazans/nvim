@@ -185,6 +185,10 @@ vim.keymap.set("n", ",gb", ":Git blame<CR>")          -- open git blame
 vim.keymap.set("n", ",d", ":bd<CR>")                  -- close buffer
 vim.keymap.set("n", ",a", ":b#<CR>")                  -- switch to alternate file #
 vim.keymap.set("n", ",yf", ":let @+=expand('%')<CR>") -- yank file path to clipboard
+vim.keymap.set("n", ",yl", function()                 -- yank file path:line:col to clipboard
+  local pos = vim.api.nvim_win_get_cursor(0)
+  vim.fn.setreg("+", string.format("%s:%d:%d", vim.fn.expand("%"), pos[1], pos[2] + 1))
+end)
 
 
 -- Used to use Netrw, trying oil.vim now.
