@@ -25,8 +25,12 @@ local function gopen(args)
   handle:close()
 
   origin_url = origin_url:gsub("\n", "") -- Remove any newline characters
-  origin_url = origin_url:gsub("git@(.+):(.+)", "https://%1/%2")
-  origin_url = origin_url:gsub("%.git", "")
+  -- Normalize SSH URLs to HTTPS
+  -- ssh://user@host/path  or  ssh://user@host:port/path
+  origin_url = origin_url:gsub("^ssh://[^@]+@([^/:]+):?%d*/(.+)", "https://%1/%2")
+  -- scp-like form: user@host:path (any user, e.g. git@, coinbase@)
+  origin_url = origin_url:gsub("^[^@/]+@([^:/]+):(.+)", "https://%1/%2")
+  origin_url = origin_url:gsub("%.git$", "")
 
   local main_branch = get_current_branch()
 
