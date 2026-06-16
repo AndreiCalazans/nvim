@@ -60,17 +60,6 @@ local plugins = {
       "hrsh7th/cmp-path",
     },
   },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    dependencies = {
-      -- show treesitter nodes
-      "nvim-treesitter/playground", -- enable more advanced treesitter-aware text objects
-      -- "nvim-treesitter/nvim-treesitter-textobjects", -- add rainbow highlighting to parens and brackets
-      "p00f/nvim-ts-rainbow",
-      "JoosepAlviste/nvim-ts-context-commentstring",
-    },
-  },
   "folke/neodev.nvim",                              -- for autocompletion in Lua in the config files
   "glepnir/lspsaga.nvim",
   "github/copilot.vim",
@@ -102,6 +91,7 @@ require("neovide")
 
 require('gopen')
 require('gcommit')
+require('repo_history').setup()
 
 -- default config
 require("bigfile").setup()

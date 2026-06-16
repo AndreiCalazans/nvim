@@ -29,7 +29,7 @@ local function liveGrep()
 end
 
 vim.keymap.set("n", ",e", builtin.files, {})
-vim.keymap.set("n", ",E", builtin.oldfiles, {})
+vim.keymap.set("n", ",E", require("repo_history").pick, {})
 vim.keymap.set("n", ",f", liveGrep, {})
 vim.keymap.set("n", ",b", builtin.buffers, {})
 vim.keymap.set("n", ",Y", builtin.command_history, {})

@@ -89,7 +89,7 @@ vim.lsp.config("gopls", {
 })
 vim.lsp.enable("gopls")
 
-require("nvim-treesitter.configs").setup({
+require("nvim-treesitter.config").setup({
   ensure_installed = { "c", "lua", "rust", "javascript", "typescript", "markdown", "markdown_inline", "vim", "astro", "go", "cpp", "c" },
   ignore_install = {},
   sync_install = false,
