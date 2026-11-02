@@ -20,6 +20,7 @@ vim.opt.laststatus = 3
 vim.opt.splitkeep = "screen"
 
 local plugins = {
+  "sindrets/diffview.nvim",
   { "catppuccin/nvim",        name = "catppuccin" },
   "ellisonleao/gruvbox.nvim",
   "rebelot/kanagawa.nvim",
@@ -38,10 +39,9 @@ local plugins = {
     config = true,
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
-      "jayp0521/mason-null-ls.nvim",
     },
   },
+  "stevearc/conform.nvim",
   {
     "neovim/nvim-lspconfig",
     lazy = false,
@@ -185,9 +185,7 @@ end)
 -- vim.keymap.set("n", "-", ":Explore<CR><CR>") -- Open file browser
 vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
 
-vim.keymap.set("n", ",p", function()
-  vim.lsp.buf.format()
-end)                                                      -- format buffer
+-- ,p is bound in after/plugin/conform.lua (conform -> LSP fallback).
 
 vim.keymap.set("n", ",P", ":!bun oxfmt --write %<CR>") -- Use oxfmt to format buffer
 
@@ -214,3 +212,23 @@ function SetProjectRoot()
 end
 
 vim.api.nvim_set_keymap('n', '<leader>.', ':lua SetProjectRoot()<CR>', { silent = true })
+
+require("diffview").setup({
+  file_panel = {
+    win_config = {
+      position = "bottom",
+      height = 12,
+    },
+  },
+  view = {
+    default = {
+      layout = "diff2_horizontal",   -- side-by-side, for branch/file diffs
+    },
+    file_history = {
+      layout = "diff2_horizontal",   -- also 2-pane
+    },
+    merge_tool = {
+      layout = "diff3_horizontal",   -- 3 panes: base | OURS+THEIRS, conflicts only
+    },
+  },
+})

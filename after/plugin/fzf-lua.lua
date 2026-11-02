@@ -1,6 +1,10 @@
 require("fzf-lua").setup {
   winopts = {
-    preview = { hidden = true }
+    preview = {
+      hidden = true,
+      layout = "vertical",   -- stack preview above/below results
+      vertical = "down:45%", -- use "up:45%" to put the preview above
+    },
   }, -- UI Options
   keymap = {
     builtin = {
@@ -35,3 +39,4 @@ vim.keymap.set("n", ",b", builtin.buffers, {})
 vim.keymap.set("n", ",Y", builtin.command_history, {})
 vim.keymap.set("n", ",j", builtin.jumps, {})
 vim.keymap.set("n", ",r", builtin.resume, {})
+vim.keymap.set("n", ",ld", vim.diagnostic.setqflist, {})

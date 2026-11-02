@@ -90,7 +90,7 @@ vim.lsp.config("gopls", {
 vim.lsp.enable("gopls")
 
 require("nvim-treesitter.config").setup({
-  ensure_installed = { "c", "lua", "rust", "javascript", "typescript", "markdown", "markdown_inline", "vim", "astro", "go", "cpp", "c" },
+  ensure_installed = { "c", "lua", "rust", "javascript", "typescript", "markdown", "markdown_inline", "vim", "astro", "go", "cpp", "kotlin", "swift" },
   ignore_install = {},
   sync_install = false,
   auto_install = true,
@@ -100,7 +100,7 @@ require("nvim-treesitter.config").setup({
 })
 
 vim.lsp.config("ts_go_ls", {
-  cmd = { "bun", "tsgo", "--lsp", "-stdio" },
+  cmd = { vim.fn.expand("$HOME/.local/share/nvim/mason/bin/tsgo"), "--lsp", "-stdio" },
   filetypes = {
     "javascript",
     "javascriptreact",
@@ -117,3 +117,30 @@ vim.lsp.config("ts_go_ls", {
 })
 
 vim.lsp.enable("ts_go_ls")
+
+-- Resolves commonMain + JVM/Android source sets from the Gradle classpath;
+-- run `./gradlew build` once so the classpath cache exists. iOS/native source
+-- sets stay weak - keep IntelliJ/Xcode for those halves.
+vim.lsp.config("kotlin-lsp", {
+  capabilities = capabilities,
+  root_markers = { "settings.gradle.kts", "settings.gradle", "build.gradle.kts", "build.gradle", ".git" },
+  settings = {
+    kotlin = {
+      -- ktlint/detekt own formatting for this repo; let conform + ktlint format.
+      formatting = { formatter = "none" },
+    },
+  },
+})
+vim.lsp.enable("kotlin-lsp")
+
+-- Swift / C-family via the Xcode-shipped SourceKit-LSP.
+-- For SPM packages it reads Package.swift directly; for the Tuist/xcodeproj
+-- app targets, generate a compile database so cross-file indexing works
+-- (see `xcode-build-server` note in the setup summary).
+vim.lsp.config("sourcekit", {
+  capabilities = capabilities,
+  cmd = { "xcrun", "sourcekit-lsp" },
+  filetypes = { "swift", "objc", "objcpp", "c", "cpp" },
+  root_markers = { "Package.swift", "MobileSkunkworks.xcworkspace", "Workspace.swift", ".git" },
+})
+vim.lsp.enable("sourcekit")
